@@ -5,10 +5,11 @@ import { useState, useRef, useEffect } from 'react'
 interface CodeModalProps {
   onClose: () => void
   onSuccess?: (allowedCollections: string[]) => void
+  initialCode?: string
 }
 
-export default function CodeModal({ onClose, onSuccess }: CodeModalProps) {
-  const [code, setCode] = useState('')
+export default function CodeModal({ onClose, onSuccess, initialCode }: CodeModalProps) {
+  const [code, setCode] = useState(initialCode?.toUpperCase() ?? '')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)

@@ -31,16 +31,40 @@ async function getCollections(): Promise<Collection[]> {
   return data ?? []
 }
 
-export default async function Home() {
-  const [posts, collections] = await Promise.all([getPosts(), getCollections()])
+async function getIsAdmin(): Promise<boolean> {
+  try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    return !!user
+  } catch {
+    return false
+  }
+}
+
+interface HomeProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const [posts, collections, isAdmin, params] = await Promise.all([
+    getPosts(),
+    getCollections(),
+    getIsAdmin(),
+    searchParams,
+  ])
+
+  const codeParam = params.code
+  const urlCode = typeof codeParam === 'string' ? codeParam : null
 
   return (
     <main className="max-w-[935px] mx-auto">
       <ProfileHeader
         postCount={posts.length}
         collectionCount={collections.length}
+        isAdmin={isAdmin}
+        urlCode={urlCode}
       />
-      <Highlights collections={collections} />
+      <Highlights />
       <PortfolioClient posts={posts} />
     </main>
   )

@@ -69,7 +69,7 @@ export default function PostGrid({ posts, activeTab, onTabChange }: PostGridProp
                 <button
                   key={post.id}
                   onClick={() => setSelectedPost(post)}
-                  className="relative aspect-square overflow-hidden group bg-gray-100 dark:bg-gray-900"
+                  className="relative aspect-[3/4] overflow-hidden group bg-gray-100 dark:bg-gray-900"
                 >
                   {firstImage ? (
                     <Image
@@ -80,7 +80,7 @@ export default function PostGrid({ posts, activeTab, onTabChange }: PostGridProp
                     />
                   ) : (
                     <img
-                      src={`https://placehold.co/400x400/${placeholderColor}/8a7a6a?text=${encodeURIComponent(post.title.charAt(0))}`}
+                      src={`https://placehold.co/300x400/${placeholderColor}/8a7a6a?text=${encodeURIComponent(post.title.charAt(0))}`}
                       alt={post.title}
                       className="w-full h-full object-cover transition-transform duration-200 group-hover:scale-105"
                     />
